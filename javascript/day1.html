@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>what is Js?</h1>
+    <p>Javascript is a high level intrepreted language , that is used to make web pages interactive</p>
+
+    framework:
+    1.react
+    2.gsap
+    3.tensorflow
+    4.nodejs
+    5.React Native
+
+    Javascript cannot only be used for web browsers , Javascript is now also used for backend development,
+    mobile apps, ai / ml.
+
+    <h1>Where does js run </h1>
+    1. In the browsers.
+    2. On the server.
+
+    <h1>Syntax and Statements</h1>
+    Javascript Syntax is the set of rules, how js programs are constructed.
+    The js syntax defines two types of values:
+    1. Fixed Values (which are also called as literals)
+    2. Variable Values ( which are also called variable)
+
+    <h2>Literals</h2>
+    1. Number
+    2. String
+
+    for Number:
+    <p id="demo"></p>
+
+    for string:
+    <p id="name"></p>
+
+    <h2>Variable values</h2>
+    Variable are used to store data values
+    1. const (Block scoped) -- mostly used in react
+    2. let (Block scoped)
+    3. var (function-scoped)
+    <br/>
+    <br/>
+    <br/>
+    Defination
+    1. Function scoped: when a variable is declared inside a function, it is only accessible within that function and cannot be used outside that function.
+    2. Block scoped: A variable when declared inside the if or switch condition or inside for or while loops are accessible within the particular condition or loop
+
+    Reassigned and constant
+    let : is for values you expect to change over time ( game score, counter , user status)
+    const : stands for constant , once you assign it a value , you cannot change or overwrite that value
+
+    <script>
+        // number and string example
+        document.getElementById("demo").innerHTML = 67.89
+        document.getElementById("name").innerHTML = "ayush shrestha"
+
+        // Block Scoped vs function scoped example
+        if(true){
+            var functionScoped="Ayush Shrestha"
+            let blockScoped="Ronin Shrestha"
+        }
+        console.log(functionScoped)
+        // console.log(blockScoped) it will show error 
+
+
+        // Reassigned and constant
+        let myscore=10;
+        myscore=20;
+        console.log(myscore)
+
+        const dob=2002
+        // dob=2003
+        console.log(dob)
+
+
+        // what is HOISTING IN JS
+    </script>
+</body>
+
+</html>
