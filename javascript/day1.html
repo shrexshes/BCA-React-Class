@@ -46,12 +46,14 @@
     1. const (Block scoped) -- mostly used in react
     2. let (Block scoped)
     3. var (function-scoped)
-    <br/>
-    <br/>
-    <br/>
+    <br />
+    <br />
+    <br />
     Defination
-    1. Function scoped: when a variable is declared inside a function, it is only accessible within that function and cannot be used outside that function.
-    2. Block scoped: A variable when declared inside the if or switch condition or inside for or while loops are accessible within the particular condition or loop
+    1. Function scoped: when a variable is declared inside a function, it is only accessible within that function and
+    cannot be used outside that function.
+    2. Block scoped: A variable when declared inside the if or switch condition or inside for or while loops are
+    accessible within the particular condition or loop
 
     Reassigned and constant
     let : is for values you expect to change over time ( game score, counter , user status)
@@ -63,25 +65,122 @@
         document.getElementById("name").innerHTML = "ayush shrestha"
 
         // Block Scoped vs function scoped example
-        if(true){
-            var functionScoped="Ayush Shrestha"
-            let blockScoped="Ronin Shrestha"
+        if (true) {
+            var functionScoped = "Ayush Shrestha"
+            let blockScoped = "Ronin Shrestha"
         }
         console.log(functionScoped)
         // console.log(blockScoped) it will show error 
 
 
         // Reassigned and constant
-        let myscore=10;
-        myscore=20;
+        let myscore = 10;
+        myscore = 20;
         console.log(myscore)
 
-        const dob=2002
+        const dob = 2002
         // dob=2003
         console.log(dob)
 
 
         // what is HOISTING IN JS
+
+
+        // What is operator
+        let a = 1
+        let b = "1"
+        console.log(a + b)
+        console.log(a - b)
+        console.log(a / b)
+        console.log(a % b) //modulus
+        console.log(a ** b) //exponential
+
+        console.log(a == b) //true
+        console.log(a === b) //strict checking 
+        console.log(a != b) //not equals to 
+        console.log(a !== b) //strictly not equals to 
+        console.log(a > b) //greater than 
+        console.log(a < b) //lesser than 
+
+
+        // DATATYPES
+        // primitive data type : string , number , boolean, null, undefined
+        // objects 
+
+        // 1. PRIMITIVE DATATYPE
+        let name = "ayush shrestha"; //Ayush shrestha
+        let age = 12; // 12
+        let isAdult = true; //true
+        let college; // undefined
+        let emptyValue = null //null
+
+        console.log(name, age, isAdult, college, emptyValue)
+
+        // OBJECT : Collection of key value pair. In real life objects are things like: house ,cars, people animals
+
+        let superHero = {
+            name: "SpiderMan",
+            realName: "Peter Parker",
+            actor: "Tom",
+            power: ["Web", "Wall Crawling", "Spidey-Sense"],
+            punchLine: "With great power comes great responsibility"
+        }
+
+        console.log(superHero.name, superHero.realName, superHero.actor, superHero.power[0], superHero.punchLine)
+
+        //Task 1 : Make an Object with your college , and put key value pair in it.
+        let PrimeCollege = {
+            fullName: "Prime College",
+            rooms: 20,
+            principal: "Someone else"
+        }
+        console.log(PrimeCollege.fullName, PrimeCollege.rooms, PrimeCollege.principal)
+
+        //FUNCTIONS : functions are reusable block of code.
+        // function functionName(parameter1,parameter2){
+        //     //block of code
+        // }
+
+        function greet(name) {
+            console.log("Hello Welcome " + name)
+        }
+        greet("AYUSH")
+
+        //ARROW FUNCTION
+        const greetings = (name) => {
+            console.log(`Greetings , hello ${name}`)
+        }
+        greetings("Spiderman")
+
+        //Task 1 : Create a arrow funtion that looks at your age and says if you can enter or not (age must be greater than 18)
+
+
+        const ageVerification=(age)=>{
+            if(age>=18){
+                console.log(`You can enter cause you age is ${age}`)
+            }
+            else{
+                console.log("Sorry get out")
+            }
+        }
+        ageVerification(20)
+
+        /* PROMISES : A promise is an object that represent the eventual completion(or faliure) of an asynchronouse operation and its resulting values
+
+        Its like a promise that something will happend and you can decide what to do when it does, or if it fails. It helps handle asynchronouse task like fetching data from an api , reading files, and waiting for a timer.
+
+        A Promise can be of 3 states
+        1. Pending : The task is still running.
+        2. Resolved (Fulfilled): The task is completed successfully
+        3. Rejected: The task failed
+        */
+
+        // syntax 
+        // const myPromise = new Promise((resolve,reject)=>{
+        //     //code
+        // })
+
+        
     </script>
 </body>
 
