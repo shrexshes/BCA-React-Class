@@ -155,11 +155,11 @@
         //Task 1 : Create a arrow funtion that looks at your age and says if you can enter or not (age must be greater than 18)
 
 
-        const ageVerification=(age)=>{
-            if(age>=18){
+        const ageVerification = (age) => {
+            if (age >= 18) {
                 console.log(`You can enter cause you age is ${age}`)
             }
-            else{
+            else {
                 console.log("Sorry get out")
             }
         }
@@ -180,8 +180,104 @@
         //     //code
         // })
 
+        function cookFood() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    let success = true;
+                    if (success) {
+                        console.log(" I have cooked food.")
+                        resolve("FOOD IS READY")
+                    }
+                    else {
+                        reject("FOOD BANAYENA, COOKER PADKIYO")
+                    }
+                }, 1000);
+            })
+        }
+
+        function eatFood() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    let success = true;
+                    if (success) {
+                        console.log(" I have eaten food.")
+                        resolve("Food is finished")
+                    }
+                    else {
+                        reject("FOOD IS NOT GOOD.")
+                    }
+                }, 1000);
+            })
+        }
+
+         function washDish() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    let success = true;
+                    if (success) {
+                        console.log("Washed Dish")
+                        resolve("DIshes are clean")
+                    }
+                    else {
+                        reject("Failed to wash dish.")
+                    }
+                }, 8000);
+            })
+        }
+
+        //promising chaining
+        // cookFood()
+        // .then(result=>{
+        //     console.log(result)
+        //     return eatFood()
+        // }).then(result=>{
+        //     console.log(result)
+        //     return washDish()
+        // }).then(result=>{
+        //     console.log(result)
+        //     console.log("TASSK ARE COMPLETED")
+        // })
+
+
+        //async and await 
+        /*
+        In js , async and await are features that make working with asynchronous code (like promises) easier and more readable. They are essentially cleaner, more synchronous looking way to handle operation that take time such as fetching data, reading files or waiting for timers
+        */
+
+       async function dailyRoutine(){
+        try {
+            let food=await cookFood()
+            console.log(food)
+
+            let eaten=await eatFood()
+            console.log(eaten)
+
+            let washed=await washDish()
+            console.log(washed)
+            console.log("all task are completed")
+        } catch (error) {
+            console.log(error)
+        }
+       }
+
+       dailyRoutine()
+
+
+    const getData=async(url)=>{
+        const response= await fetch(url)
+        const data= await response.json()
+        console.log(data)
+    }
+    getData("https://jsonplaceholder.typicode.com/todos/")
+
         
     </script>
 </body>
+
+
+
+//code 
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
 
 </html>
