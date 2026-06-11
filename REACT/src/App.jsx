@@ -5,6 +5,9 @@ import heroImg from './assets/hero.png'
 import './App.css'
 import Greet from './components/Greet'
 import PrimaryButton from './components/Buttons'
+import UseStateExample from './components/UseStateExample'
+import ConditionalRendering from './components/ConditionalRendering'
+import UseEffectExample from './components/UseEffectExample'
 
 function App() {
   const name = "Ayush SHrestha"
@@ -27,7 +30,10 @@ function App() {
 
       <PrimaryButton title="Click me"/>
       <PrimaryButton title="GO to this link "/>
+      <UseStateExample/>
 
+      <ConditionalRendering/>
+<UseEffectExample/>
 
     </>
   )
