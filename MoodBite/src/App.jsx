@@ -7,26 +7,37 @@ import Header from './components/Header'
 import ApiSetUp from './components/ApiSetUp'
 
 function App() {
-  const [showApiKey,setShowApiKey]=useState(true)
-  const [apiKeyInput,setApiKeyInput]=useState('')
+  const [showApiKey, setShowApiKey] = useState(true)
+  const [apiKeyInput, setApiKeyInput] = useState('')
+  const [apikey, setApiKey] = useState("")
 
-  const handleApiKeySubmit=(e)=>{
+  //save to localstorage
+  useEffect(() => {
+    if (apikey) {
+      localStorage.setItem("apiKey", apikey)
+    }
+  }, [apikey])
+
+  const handleApiKeySubmit = (e) => {
     e.preventDefault()
+    if (apiKeyInput) {
+      setApiKey(apiKeyInput)
+      setShowApiKey(false)
+    }
   }
 
-  if(showApiKey){
-    return(
-      <ApiSetUp apiKeyInput={apiKeyInput} setApiKeyInput={setApiKeyInput} onSubmit={handleApiKeySubmit}/>
+  console.log(apiKeyInput)
+
+  if (showApiKey) {
+    return (
+      <ApiSetUp apiKeyInput={apiKeyInput} setApiKeyInput={setApiKeyInput} onSubmit={handleApiKeySubmit} />
     )
   }
 
 
-  useEffect(()=>{
-
-  },[])
   return (
     <>
-    <Header/>
+      <Header onChangeApiKey={()=>{setShowApiKey(true); setApiKeyInput("")}} />
     </>
   )
 }
