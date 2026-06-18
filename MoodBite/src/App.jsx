@@ -6,6 +6,7 @@ import './App.css'
 import Header from './components/Header'
 import ApiSetUp from './components/ApiSetUp'
 import HeroText from './components/HeroText'
+import MoodSelector from './components/MoodSelector'
 
 function App() {
   const [showApiKey, setShowApiKey] = useState(true)
@@ -51,6 +52,7 @@ function App() {
     <>
       <Header onChangeApiKey={() => { setShowApiKey(true); setApiKeyInput("") }} />
       <HeroText />
+      <MoodSelector moods={MOODS}/>
     </>
   )
 }
