@@ -12,6 +12,9 @@ function App() {
   const [showApiKey, setShowApiKey] = useState(true)
   const [apiKeyInput, setApiKeyInput] = useState('')
   const [apikey, setApiKey] = useState("")
+  const [selectedMood,setSelectedMood]=useState(null)
+  const [customMood,setCustomMood]=useState("")
+
 
   const MOODS = [
     { id: "happy", emoji: "😄", label: "Happy", color: "from-yellow-400 to-orange-400", bg: "bg-yellow-50", border: "border-yellow-300" },
@@ -41,6 +44,43 @@ function App() {
 
   console.log(apiKeyInput)
 
+  const fetchRecipe=async(moodLabel)=>{
+    
+    const prompt=`Your are a creative culinary expert, Based on someone feeling ${moodLabel}. right now suggest 2 recipe ideas that match their mood.
+    
+    for each recipe, return a JSON object with:
+    - name : string(creative recipe with nepali background)
+    - emoji : string (1 fitting emoji)
+    - description: string (1-2 sentences about why this recipe fits the mood)
+    - difficulty : string("Easy","Medium","Hard")
+    - cookTime: string (eg:10mins)
+    - ingredients: array of strings(5-6 main ingredients to make the dish)
+    - steps : array of strings (5-7 clear cooking steps)
+
+    Return only a valid JSON array of 2 recipes , no markdown , no extra text
+    `
+  }
+
+
+  const handleMoodSelect=(mood)=>{
+    // this function is used to select the mood from the MOOD json data
+    setSelectedMood(mood)
+    setCustomMood("") //if by mistake any thing is typed in input box then it will be empty 
+    console.log(mood.label)
+
+    //TODO : fetch function
+  }
+
+  //shrexhes
+  const handleCustomMoodSubmit=(e)=>{
+    e.preventDefault()
+    if(customMood){
+      setCustomMood({id:"custom",emoji:"custom",label:customMood})
+
+      //TODO : fetch function
+    }
+  }
+
   if (showApiKey) {
     return (
       <ApiSetUp apiKeyInput={apiKeyInput} setApiKeyInput={setApiKeyInput} onSubmit={handleApiKeySubmit} />
@@ -52,7 +92,7 @@ function App() {
     <>
       <Header onChangeApiKey={() => { setShowApiKey(true); setApiKeyInput("") }} />
       <HeroText />
-      <MoodSelector moods={MOODS}/>
+      <MoodSelector moods={MOODS} onMoodSelect={handleMoodSelect} customMood={customMood} setCustomMood={setCustomMood} onCustomSubmit={handleCustomMoodSubmit}  />
     </>
   )
 }
