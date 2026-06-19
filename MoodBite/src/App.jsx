@@ -60,7 +60,31 @@ function App() {
     Return only a valid JSON array of 2 recipes , no markdown , no extra text
     `
     try {
-      const response=await fetch("")
+      const response=await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent",
+        {
+          method:"POST",
+          headers:{"Content-Type":"application/json","X-goog-api-key":apikey},
+          body:JSON.stringify({
+            contents:[{parts:[{text:prompt}]}],
+            generationConfig:{temperature:0.9,maxOutputTokens:8192}
+          })
+        }
+      )
+      //error ayo bhanne
+      if(!response.ok){
+        const err=await response.json()
+        console.log(err)
+      }
+
+      // if success ayo bhanne
+      const data=await response.json()
+      console.log(data)
+      const text=data.candidates[0]?.content?.parts[0].text;
+
+      if(!text){console.log("No response from GEMINI")}
+
+      const cleaned=text.replace(/```json\n?/g,"").replace(/```\n?/g,"").trim()
+
     } catch (error) {
       console.log(error)
     }
@@ -74,6 +98,7 @@ function App() {
     console.log(mood.label)
 
     //TODO : fetch function
+    fetchRecipe(mood.label)
   }
 
   //shrexhes
