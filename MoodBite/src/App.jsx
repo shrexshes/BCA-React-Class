@@ -59,6 +59,11 @@ function App() {
 
     Return only a valid JSON array of 2 recipes , no markdown , no extra text
     `
+    try {
+      const response=await fetch("")
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 
