@@ -12,9 +12,9 @@ function App() {
   const [showApiKey, setShowApiKey] = useState(true)
   const [apiKeyInput, setApiKeyInput] = useState('')
   const [apikey, setApiKey] = useState("")
-  const [selectedMood,setSelectedMood]=useState(null)
-  const [customMood,setCustomMood]=useState("")
-
+  const [selectedMood, setSelectedMood] = useState(null)
+  const [customMood, setCustomMood] = useState("")
+  const [recipes, setRecipes] = useState([])
 
   const MOODS = [
     { id: "happy", emoji: "😄", label: "Happy", color: "from-yellow-400 to-orange-400", bg: "bg-yellow-50", border: "border-yellow-300" },
@@ -44,9 +44,9 @@ function App() {
 
   console.log(apiKeyInput)
 
-  const fetchRecipe=async(moodLabel)=>{
-    
-    const prompt=`Your are a creative culinary expert, Based on someone feeling ${moodLabel}. right now suggest 2 recipe ideas that match their mood.
+  const fetchRecipe = async (moodLabel) => {
+
+    const prompt = `Your are a creative culinary expert, Based on someone feeling ${moodLabel}. right now suggest 2 recipe ideas that match their mood.
     
     for each recipe, return a JSON object with:
     - name : string(creative recipe with nepali background)
@@ -60,54 +60,55 @@ function App() {
     Return only a valid JSON array of 2 recipes , no markdown , no extra text
     `
     try {
-      const response=await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent",
+      const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent",
         {
-          method:"POST",
-          headers:{"Content-Type":"application/json","X-goog-api-key":apikey},
-          body:JSON.stringify({
-            contents:[{parts:[{text:prompt}]}],
-            generationConfig:{temperature:0.9,maxOutputTokens:8192}
+          method: "POST",
+          headers: { "Content-Type": "application/json", "X-goog-api-key": apikey },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.9, maxOutputTokens: 8192 }
           })
         }
       )
       //error ayo bhanne
-      if(!response.ok){
-        const err=await response.json()
+      if (!response.ok) {
+        const err = await response.json()
         console.log(err)
       }
 
       // if success ayo bhanne
-      const data=await response.json()
+      const data = await response.json()
       console.log(data)
-      const text=data.candidates[0]?.content?.parts[0].text;
+      const text = data.candidates[0]?.content?.parts[0].text;
 
-      if(!text){console.log("No response from GEMINI")}
+      if (!text) { console.log("No response from GEMINI") }
 
-      const cleaned=text.replace(/```json\n?/g,"").replace(/```\n?/g,"").trim()
-
+      const cleaned = text.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim()
+      const parsed = JSON.parse(cleaned)
+      setRecipes(parsed)
     } catch (error) {
       console.log(error)
     }
   }
 
 
-  const handleMoodSelect=(mood)=>{
+  const handleMoodSelect = (mood) => {
     // this function is used to select the mood from the MOOD json data
     setSelectedMood(mood)
     setCustomMood("") //if by mistake any thing is typed in input box then it will be empty 
     console.log(mood.label)
 
-    //TODO : fetch function
     fetchRecipe(mood.label)
   }
 
   //shrexhes
-  const handleCustomMoodSubmit=(e)=>{
+  const handleCustomMoodSubmit = (e) => {
     e.preventDefault()
-    if(customMood){
-      setCustomMood({id:"custom",emoji:"custom",label:customMood})
+    if (customMood) {
+      setCustomMood({ id: "custom", emoji: "custom", label: customMood })
 
       //TODO : fetch function
+      fetchRecipe(customMood)
     }
   }
 
@@ -122,7 +123,33 @@ function App() {
     <>
       <Header onChangeApiKey={() => { setShowApiKey(true); setApiKeyInput("") }} />
       <HeroText />
-      <MoodSelector moods={MOODS} onMoodSelect={handleMoodSelect} customMood={customMood} setCustomMood={setCustomMood} onCustomSubmit={handleCustomMoodSubmit}  />
+      <MoodSelector moods={MOODS} onMoodSelect={handleMoodSelect} customMood={customMood} setCustomMood={setCustomMood} onCustomSubmit={handleCustomMoodSubmit} />
+      <div className='mx-auto max-w-6xl'>
+        {recipes.map((recipe, index) => (
+          <div className='bg-neutral-900 text-white my-10 p-8 rounded-3xl'>
+            <div className='flex items-center gap-5 pb-8'>
+              <p className='text-3xl'>{recipe.emoji}</p>
+              <p className='text-3xl google-sans font-bold'>{recipe.name}</p>
+            </div>
+
+            <p className='text-lg font-light google-sans'>{recipe.description}</p>
+            <p className='bg-white text-black rounded-full w-fit px-4 py-2 my-3'>{recipe.difficulty}</p>
+            <p className='bg-white text-black w-fit px-4 py-2 rounded-full'>{recipe.cookTime}</p>
+
+            <p className='font-bold text-lg google-sans mt-10'>Ingredients</p>
+            {recipe.ingredients.map((ingredient) => (
+              <div className='my-5'>
+                <p className='text-sm '>{ingredient}</p>
+              </div>
+            ))}
+
+            <p className='font-bold text-lg google-sans mt-10'>Steps</p>
+            {recipe.steps.map((step) => (
+              <p className='my-5 text-sm google-sans'>{step}</p>
+            ))}
+          </div>
+        ))}
+      </div>
     </>
   )
 }
